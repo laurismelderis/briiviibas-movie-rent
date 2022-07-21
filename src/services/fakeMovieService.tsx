@@ -71,7 +71,3 @@ const movies: Array<Movie> = [
 export const getMovies = () => {
     return movies
 }
-
-export const getMovie = (movie: Movie) => {
-    return _.find(movies, { id: movie.id })
-}
