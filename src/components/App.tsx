@@ -78,16 +78,24 @@ function App () {
 
     return (
         <>
-            <div className="main">
-                <Table
-                    headers={[
-                        'Movie',
-                        'Genre',
-                        'Price',
-                        'Is in stock'
-                    ]}
-                    content={prepareCatalogMovies()}
-                />
+            <div className="banner-base">
+                <div className="black-banner">
+                    <div className="black-banner_title">Movie Rental</div>
+                </div>
+                <div className="white-banner"></div>
+            </div>
+            <div className="base">
+                <div className="main">
+                    <Table
+                        headers={[
+                            'Movie',
+                            'Genre',
+                            'Price',
+                            'Is in stock'
+                        ]}
+                        content={prepareCatalogMovies()}
+                    />
+                </div>
                 <div className="sideGrid">
                     <div>Rented movies</div>
                     <Table
@@ -99,6 +107,7 @@ function App () {
                         content={prepareRentedMovies()}
                     />
                 </div>
+
             </div>
         </>
     )
