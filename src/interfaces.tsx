@@ -9,5 +9,6 @@ export interface Movie {
 }
 
 export interface RentedMovie extends Movie {
-    rentId: number
+    // rentId: number,
+    countRented: number,
 }

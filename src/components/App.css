@@ -81,3 +81,21 @@ margin: 0;
     top: 3.2em;
     padding-left: 1em;
 }
+.countCol {
+    flex-direction: row;
+    display: flex;
+    justify-content: space-between;
+    gap: 0em;
+}
+.plusButton {
+    padding: 0;
+}
+.minusButton {
+
+    padding: 0;
+}
+
+.theCount {
+
+    padding: 0;
+}
