@@ -7,7 +7,7 @@ import { getMovies } from '../services/fakeMovieService'
 import Table from './common/Table'
 import checkImg from '../assets/check.png'
 import deleteImg from '../assets/delete.png'
-import _, { findIndex } from 'lodash'
+import _ from 'lodash'
 
 function App () {
     const getRentedAllMovies = (): Array<RentedMovie> => {
@@ -16,9 +16,9 @@ function App () {
         return storageMoviesArray
     }
     const loadIsInStock = () => {
-        var movies: Array<Movie> = getMovies()
+        const movies: Array<Movie> = getMovies()
         if (localStorage.getItem('catalogMovies')) {
-            var catalogMoviesStates : Array<Movie> | [] = JSON.parse(localStorage.getItem('catalogMovies') || '[]')
+            const catalogMoviesStates : Array<Movie> | [] = JSON.parse(localStorage.getItem('catalogMovies') || '[]')
             if (catalogMoviesStates.length !== movies.length) {
                 return false
             } else {
@@ -26,21 +26,27 @@ function App () {
             }
         }
     }
-    const [rentedMovies, setRentedMovies] = useState<Array<RentedMovie>>(getRentedAllMovies() || [])
-    const [rentedMovieIdCounter, setRentedMovieIdCounter] = useState(0)
     const [catalogMovies, setCatalogMovies] = useState<Array<Movie>>(loadIsInStock() || getMovies())
+    // const [catalogMovies, setCatalogMovies] = useState<Array<Movie>>(() => {
+    //     const item: string = localStorage.getItem('catalogMovies')!
+    //     const movies : Array<Movie> | [] = new Array<Movie>(JSON.parse(item)) || []
+    //     if (movies === []) {
+    //         localStorage.setItem('catalogMovies', JSON.stringify(catalogMovies))
+    //     }
+    //     return movies
+    // })
+    const [rentedMovies, setRentedMovies] = useState<Array<RentedMovie>>(getRentedAllMovies() || [])
 
     useEffect(() => {
         localStorage.setItem('rentedMovies', JSON.stringify(rentedMovies))
         localStorage.setItem('catalogMovies', JSON.stringify(catalogMovies))
     })
+
     const rentMovie = (movie: Movie) => {
         if (movie.countInStock > 0) {
-            var count = 1
-            var newRentedMovies: Array<RentedMovie> = [...rentedMovies]
-            var rentedMovieCount: number = newRentedMovies.filter((movieObj) => movieObj.id === movie.id).length
+            const newRentedMovies: Array<RentedMovie> = [...rentedMovies]
+            const rentedMovieCount: number = newRentedMovies.filter((movieObj) => movieObj.id === movie.id).length
             const newCatalogMovies: Array<Movie> = [...catalogMovies]
-            // const newRentedMovie = {}
             if (rentedMovieCount > 0) {
                 const movieIndex = newRentedMovies.findIndex(aMovie => aMovie.name === movie.name)
                 newRentedMovies[movieIndex].countRented++
@@ -58,7 +64,6 @@ function App () {
                 theMovie.countInStock--
                 setCatalogMovies(newCatalogMovies)
             }
-            // setRentedMovieIdCounter(rentedMovieIdCounter + 1)
             setRentedMovies(newRentedMovies)
         }
     }
@@ -134,6 +139,7 @@ function App () {
         }
     }
     const prepareCatalogMovies = () => {
+        if (catalogMovies === null) return []
         const preparedCatalogMovies = catalogMovies.map(catalogMovie => {
             return {
                 name: catalogMovie.name,
